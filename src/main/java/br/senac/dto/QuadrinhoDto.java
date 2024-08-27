@@ -1,5 +1,6 @@
 package br.senac.dto;
 
+import java.awt.*;
 import java.util.Date;
 
 public class QuadrinhoDto {
@@ -7,6 +8,7 @@ public class QuadrinhoDto {
     private int id;
     private String nome;
     private Date dataPublicacao;
+    private String sinopse;
     private AutorDto autor;
     private CategoriaDto categoria;
     private EditorDto editor;
@@ -36,6 +38,14 @@ public class QuadrinhoDto {
 
     public void setDataPublicacao(Date dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
+    }
+
+    public String getSinopse() {
+        return sinopse;
+    }
+
+    public void setSinopse(String sinopse) {
+        this.sinopse = sinopse;
     }
 
     public AutorDto getAutor() {
