@@ -67,6 +67,13 @@ public class QuadrinhoService {
             for (QuadrinhoDto quadrinho : quadrinhos) {
                 AutorDto autor = autorDao.findById(conn, quadrinho.getAutor().getId());
                 quadrinho.setAutor(autor);
+                CategoriaDto categoria = categoriaDao.findById(conn, quadrinho.getCategoria().getId());
+                quadrinho.setCategoria(categoria);
+                EditorDto editor = editorDao.findById(conn, quadrinho.getEditor().getId());
+                quadrinho.setEditor(editor);
+                IlustradorDto ilustrador  = illustradorDao.findById(conn, quadrinho.getIlustrador().getId());
+                quadrinho.setIlustrador(ilustrador);
+                return quadrinhos;
             }
         }
         return null;
