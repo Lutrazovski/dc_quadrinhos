@@ -30,7 +30,7 @@ public class QuadrinhoService {
     private IlustradorDao illustradorDao;
 
     @Inject
-    private DataSource dataSource;
+    DataSource dataSource;
 
     @Transactional
     public void createQuadrinho(QuadrinhoDto quadrinho) throws SQLException {
