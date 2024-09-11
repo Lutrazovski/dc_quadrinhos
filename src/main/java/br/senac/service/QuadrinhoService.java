@@ -18,18 +18,6 @@ public class QuadrinhoService {
     private QuadrinhoDao quadrinhoDao;
 
     @Inject
-    private AutorDao autorDao;
-
-    @Inject
-    private CategoriaDao categoriaDao;
-
-    @Inject
-    private EditorDao editorDao;
-
-    @Inject
-    private IlustradorDao illustradorDao;
-
-    @Inject
     private DataSource dataSource;
 
     @Transactional
@@ -63,19 +51,7 @@ public class QuadrinhoService {
 
     public List<QuadrinhoDto> getAllQuadrinhos() throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            List<QuadrinhoDto> quadrinhos = quadrinhoDao.findAll(conn);
-            for (QuadrinhoDto quadrinho : quadrinhos) {
-                AutorDto autor = autorDao.findById(conn, quadrinho.getAutor().getId());
-                quadrinho.setAutor(autor);
-                CategoriaDto categoria = categoriaDao.findById(conn, quadrinho.getCategoria().getId());
-                quadrinho.setCategoria(categoria);
-                EditorDto editor = editorDao.findById(conn, quadrinho.getEditor().getId());
-                quadrinho.setEditor(editor);
-                IlustradorDto ilustrador  = illustradorDao.findById(conn, quadrinho.getIlustrador().getId());
-                quadrinho.setIlustrador(ilustrador);
-                return quadrinhos;
-            }
+            return quadrinhoDao.findAll(conn);
         }
-        return null;
     }
 }
