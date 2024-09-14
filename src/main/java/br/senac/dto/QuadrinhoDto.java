@@ -4,7 +4,8 @@ public class QuadrinhoDto {
 
     private int id;
     private String nome;
-    private byte[] imagem;
+    private String imagem;
+    private HeroiDto heroi;
 
     public int getId() {
         return id;
@@ -22,11 +23,19 @@ public class QuadrinhoDto {
         this.nome = nome;
     }
 
-    public byte[] getImagem() {
+    public String getImagem() {
         return imagem;
     }
 
-    public void setImagem(byte[] imagem) {
+    public void setImagem(String imagem) {
         this.imagem = imagem;
+    }
+
+    public HeroiDto getHeroi() {
+        return heroi;
+    }
+
+    public void setHeroi(HeroiDto heroi) {
+        this.heroi = heroi;
     }
 }

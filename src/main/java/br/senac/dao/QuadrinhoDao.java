@@ -11,21 +11,23 @@ import java.util.List;
 public class QuadrinhoDao {
 
     public void save(Connection conn ,QuadrinhoDto quadrinho) throws SQLException {
-        String sql = "INSERT INTO quadrinho(id, titulo_quadrinho, imagem,) VALUES(?,?,?)";
+        String sql = "INSERT INTO quadrinho(id, nome, imagem, id_heroi) VALUES(?,?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, quadrinho.getId());
             stmt.setString(2, quadrinho.getNome());
-            stmt.setBytes(3, quadrinho.getImagem());
+            stmt.setString(3, quadrinho.getImagem());
+            stmt.setInt(4, quadrinho.getHeroi().getId());
             stmt.executeUpdate();
         }
     }
 
     public void update(Connection conn, QuadrinhoDto quadrinho) throws SQLException {
-        String sql = "UPDATE quadrinho SET titulo_quadrinho = ?, imagem = ? WHERE id = ?";
+        String sql = "UPDATE quadrinho SET nome = ?, imagem = ?, id_heroi = ? WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, quadrinho.getNome());
-            stmt.setBytes(2, quadrinho.getImagem());
-            stmt.setInt(3, quadrinho.getId());
+            stmt.setString(2, quadrinho.getImagem());
+            stmt.setInt(3, quadrinho.getHeroi().getId());
+            stmt.setInt(4, quadrinho.getId());
             stmt.executeUpdate();
         }
     }
@@ -39,15 +41,19 @@ public class QuadrinhoDao {
     }
 
     public QuadrinhoDto findById(Connection conn, int id) throws SQLException {
-        String sql = "SELECT titulo_quadrinho, imagem, FROM quadrinho WHERE id = ?";
+        String sql = "SELECT id, nome, imagem, id_heroi FROM quadrinho WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     QuadrinhoDto quadrinho = new QuadrinhoDto();
                     quadrinho.setId(rs.getInt("id"));
-                    quadrinho.setNome(rs.getString("titulo_quadrinho"));
-                    quadrinho.setImagem(rs.getBytes("imagem"));
+                    quadrinho.setNome(rs.getString("nome"));
+                    quadrinho.setImagem(rs.getString("imagem"));
+
+                    HeroiDto heroi = new HeroiDto();
+                    heroi.setId(rs.getInt("id_heroi"));
+                    quadrinho.setHeroi(heroi);
 
                     return quadrinho;
                 }
@@ -57,15 +63,19 @@ public class QuadrinhoDao {
     }
 
     public List<QuadrinhoDto> findAll(Connection conn) throws SQLException {
-        String sql = "SELECT titulo_quadrinho, imagem FROM quadrinho";
+        String sql = "SELECT id, nome, imagem, id_heroi FROM quadrinho";
         List<QuadrinhoDto> quadrinhos = new ArrayList<>();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 QuadrinhoDto quadrinho = new QuadrinhoDto();
                 quadrinho.setId(rs.getInt("id"));
-                quadrinho.setNome(rs.getString("titulo_quadrinho"));
-                quadrinho.setImagem(rs.getBytes("imagem"));
+                quadrinho.setNome(rs.getString("nome"));
+                quadrinho.setImagem(rs.getString("imagem"));
+
+                HeroiDto heroi = new HeroiDto();
+                heroi.setId(rs.getInt("id_heroi"));
+                quadrinho.setHeroi(heroi);
 
                 quadrinhos.add(quadrinho);
             }

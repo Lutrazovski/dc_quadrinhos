@@ -11,20 +11,18 @@ import java.util.List;
 public class HeroiDao {
 
     public void save(Connection conn , HeroiDto heroi) throws SQLException {
-        String sql = "INSERT INTO heroi(id, nome_heroi, imagem,) VALUES(?,?,?)";
+        String sql = "INSERT INTO heroi(id, nome) VALUES(?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, heroi.getId());
             stmt.setString(2, heroi.getNome());
-            stmt.setBytes(3, heroi.getImagem());
             stmt.executeUpdate();
         }
     }
 
     public void update(Connection conn, HeroiDto heroi) throws SQLException {
-        String sql = "UPDATE heroi SET nome_heroi = ?, imagem = ? WHERE id = ?";
+        String sql = "UPDATE heroi SET nome = ? WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, heroi.getNome());
-            stmt.setBytes(2, heroi.getImagem());
             stmt.setInt(3, heroi.getId());
             stmt.executeUpdate();
         }
@@ -39,15 +37,14 @@ public class HeroiDao {
     }
 
     public HeroiDto findById(Connection conn, int id) throws SQLException {
-        String sql = "SELECT nome_heroi, imagem, FROM heroi WHERE id = ?";
+        String sql = "SELECT id, nome FROM heroi WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     HeroiDto heroi = new HeroiDto();
                     heroi.setId(rs.getInt("id"));
-                    heroi.setNome(rs.getString("titulo_quadrinho"));
-                    heroi.setImagem(rs.getBytes("imagem"));
+                    heroi.setNome(rs.getString("nome"));
 
                     return heroi;
                 }
@@ -57,15 +54,14 @@ public class HeroiDao {
     }
 
     public List<HeroiDto> findAll(Connection conn) throws SQLException {
-        String sql = "SELECT nome_heroi, imagem FROM heroi";
+        String sql = "SELECT id, nome FROM heroi";
         List<HeroiDto> herois = new ArrayList<>();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 HeroiDto heroi = new HeroiDto();
                 heroi.setId(rs.getInt("id"));
-                heroi.setNome(rs.getString("titulo_quadrinho"));
-                heroi.setImagem(rs.getBytes("imagem"));
+                heroi.setNome(rs.getString("nome"));
 
                 herois.add(heroi);
             }

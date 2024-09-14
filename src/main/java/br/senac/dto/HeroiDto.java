@@ -4,7 +4,6 @@ public class HeroiDto {
 
     private int id;
     private String nome;
-    private byte[] imagem;
 
     public int getId() {
         return id;
@@ -20,13 +19,5 @@ public class HeroiDto {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public byte[] getImagem() {
-        return imagem;
-    }
-
-    public void setImagem(byte[] imagem) {
-        this.imagem = imagem;
     }
 }
