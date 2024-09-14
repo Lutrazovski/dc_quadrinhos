@@ -1,6 +1,6 @@
 package br.senac.dto;
 
-public class AutorDto {
+public class HeroiDto {
 
     private int id;
     private String nome;
