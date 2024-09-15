@@ -38,19 +38,19 @@ public class HeroiService {
     }
 
     @Transactional
-    public void deleteQuadrinho(int id) throws SQLException {
+    public void deleteHeroi(int id) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
             heroiDao.delete(conn, id);
         }
     }
 
-    public HeroiDto getQuadrinhoById(int id) throws SQLException {
+    public HeroiDto getHeroiById(int id) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
             return heroiDao.findById(conn, id);
         }
     }
 
-    public List<HeroiDto> getAllQuadrinhos() throws SQLException {
+    public List<HeroiDto> getAllHerois() throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
             return heroiDao.findAll(conn);
         }
