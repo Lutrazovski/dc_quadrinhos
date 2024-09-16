@@ -54,4 +54,10 @@ public class QuadrinhoService {
             return quadrinhoDao.findAll(conn);
         }
     }
+
+    public QuadrinhoDto getQuadrinhoByHeroiId(int id) throws SQLException {
+        try (Connection conn = dataSource.getConnection()) {
+            return quadrinhoDao.findByHeroiId(conn, id);
+        }
+    }
 }

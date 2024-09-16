@@ -23,7 +23,6 @@ public class QuadrinhoResource {
     QuadrinhoService quadrinhoService;
 
     @POST
-    @Path("/quadrinhos")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Criar um novo Quadrinho")
@@ -36,7 +35,8 @@ public class QuadrinhoResource {
         try {
             quadrinhoService.createQuadrinho(quadrinho);
             return Response.status(Response.Status.CREATED).entity(quadrinho).build();
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
@@ -106,6 +106,28 @@ public class QuadrinhoResource {
         try {
             List<QuadrinhoDto> quadrinhos = quadrinhoService.getAllQuadrinhos();
             return Response.ok(quadrinhos).build();
+        } catch (SQLException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("/{heroi_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Obter uma Quadrinho pelo ID do heroi")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "Quadrinho obtido com sucesso"),
+            @APIResponse(responseCode = "404", description = "Quadrinho não encontrado"),
+            @APIResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
+    public Response obterQuadrinhoPorHeroiId(@PathParam("heroi_id") int id) {
+        try {
+            QuadrinhoDto quadrinho = quadrinhoService.getQuadrinhoByHeroiId(id);
+            if (quadrinho != null) {
+                return Response.ok(quadrinho).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
         } catch (SQLException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
