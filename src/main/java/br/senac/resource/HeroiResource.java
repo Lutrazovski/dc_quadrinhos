@@ -23,7 +23,6 @@ public class HeroiResource {
     HeroiService heroiService;
 
     @POST
-    @Path("/herois")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Criar um novo Heroi")
