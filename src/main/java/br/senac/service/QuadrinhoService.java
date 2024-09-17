@@ -55,7 +55,7 @@ public class QuadrinhoService {
         }
     }
 
-    public QuadrinhoDto getQuadrinhoByHeroiId(int id) throws SQLException {
+    public List<QuadrinhoDto> getQuadrinhoByHeroiId(int id) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
             return quadrinhoDao.findByHeroiId(conn, id);
         }
