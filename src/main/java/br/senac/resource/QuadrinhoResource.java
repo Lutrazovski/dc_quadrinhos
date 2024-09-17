@@ -112,7 +112,7 @@ public class QuadrinhoResource {
     }
 
     @GET
-    @Path("/{heroi_id}")
+    @Path("/heroi/{heroi_id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Obter uma Quadrinho pelo ID do heroi")
     @APIResponses({
@@ -122,9 +122,9 @@ public class QuadrinhoResource {
     })
     public Response obterQuadrinhoPorHeroiId(@PathParam("heroi_id") int id) {
         try {
-            QuadrinhoDto quadrinho = quadrinhoService.getQuadrinhoByHeroiId(id);
-            if (quadrinho != null) {
-                return Response.ok(quadrinho).build();
+            List<QuadrinhoDto> quadrinhos = quadrinhoService.getQuadrinhoByHeroiId(id);
+            if (quadrinhos != null) {
+                return Response.ok(quadrinhos).build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
